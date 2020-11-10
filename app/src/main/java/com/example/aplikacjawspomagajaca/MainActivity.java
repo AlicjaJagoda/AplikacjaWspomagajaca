@@ -51,9 +51,9 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-    private void startCamera() {
-        //todo
-    }
+   // private void startCamera() {
+
+   // }
 
     public void nowaAkt(){
         aktSkanowanieIntent= new Intent(this, SkanowanieActivity.class);
