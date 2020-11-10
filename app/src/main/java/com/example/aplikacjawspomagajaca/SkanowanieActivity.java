@@ -11,6 +11,9 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.common.util.concurrent.ListenableFuture;
@@ -21,13 +24,25 @@ public class SkanowanieActivity extends AppCompatActivity {
 
     private PreviewView previewView;
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
+    private Button qrCodeFoundButton;
+    private String qrCode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_skanowanie);
-        previewView = findViewById(R.id.activity_main_previewView);
-        cameraProviderFuture = ProcessCameraProvider.getInstance(this);
+        previewView = findViewById(R.id.activity_previewView);
         startCamera();
+        qrCodeFoundButton = findViewById(R.id.activity_qrCodeFoundButton);
+        qrCodeFoundButton.setVisibility(View.INVISIBLE);
+        qrCodeFoundButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), qrCode, Toast.LENGTH_SHORT).show();
+                Log.i(MainActivity.class.getSimpleName(), "QR Code Found: " + qrCode);
+            }
+        });
+        cameraProviderFuture = ProcessCameraProvider.getInstance(this);
+
     }
     private void startCamera() {
         cameraProviderFuture.addListener(() -> {
