@@ -13,6 +13,8 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Size;
@@ -36,7 +38,6 @@ public class SkanowanieActivity extends AppCompatActivity {
         setContentView(R.layout.activity_skanowanie);
         previewView = findViewById(R.id.activity_previewView);
         cameraProviderFuture = ProcessCameraProvider.getInstance(this);
-        //startCamera();
         qrCodeFoundButton = findViewById(R.id.activity_qrCodeFoundButton);
         qrCodeFoundButton.setVisibility(View.INVISIBLE);
         qrCodeFoundButton.setOnClickListener(new View.OnClickListener() {
@@ -44,6 +45,7 @@ public class SkanowanieActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), qrCode, Toast.LENGTH_SHORT).show();
                 Log.i(MainActivity.class.getSimpleName(), "QR Code Found: " + qrCode);
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(qrCode)));
             }
         });
         startCamera();
