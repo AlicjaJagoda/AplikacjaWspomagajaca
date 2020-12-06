@@ -10,7 +10,7 @@
         android:id="@+id/btnZeskanujKod"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Skanuj"
+        android:text="Skanuj kod nauczyciela"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.455"
@@ -29,4 +29,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/tlo" />
+
+    <Button
+        android:id="@+id/skanujSalaBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Skanuj kod sali"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.448"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnZeskanujKod"
+        app:layout_constraintVertical_bias="0.345" />
 </androidx.constraintlayout.widget.ConstraintLayout>
