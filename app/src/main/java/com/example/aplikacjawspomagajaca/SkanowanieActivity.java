@@ -28,6 +28,7 @@ import java.util.concurrent.ExecutionException;
 
 public class SkanowanieActivity extends AppCompatActivity {
 
+    Intent aktSkanowanieSalaIntent;
     private PreviewView previewView;
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private Button qrCodeFoundButton;
@@ -40,14 +41,28 @@ public class SkanowanieActivity extends AppCompatActivity {
         cameraProviderFuture = ProcessCameraProvider.getInstance(this);
         qrCodeFoundButton = findViewById(R.id.activity_qrCodeFoundButton);
         qrCodeFoundButton.setVisibility(View.INVISIBLE);
+        Button skanSalaBtn=findViewById(R.id.skanSalaBtn);
+        skanSalaBtn.setVisibility(View.INVISIBLE);
         qrCodeFoundButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), qrCode, Toast.LENGTH_SHORT).show();
-                Log.i(MainActivity.class.getSimpleName(), "QR Code Found: " + qrCode);
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(qrCode)));
-            }
-        });
+                //parsowanie dla kodu QR (znacznik: SUZ_ -> sala znacznik: NUZ_ -> nauczyciel)
+                String znacznik=qrCode.substring(0,4);
+                if(znacznik.equals("NUZ_")){
+                    String URL=qrCode.substring(4);
+                    Toast.makeText(getApplicationContext(), URL, Toast.LENGTH_SHORT).show();
+                    //Log.i(MainActivity.class.getSimpleName(), "QR Code Found: " + qrCode);
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(URL)));
+                }else if(znacznik.equals("SUZ_")) {
+                    Toast.makeText(getApplicationContext(), "Wykryto kod sali, można przejść do skanowania kodu sali klikając guzik poniżej", Toast.LENGTH_LONG).show();
+                    skanSalaBtn.setVisibility(View.VISIBLE);
+                    skanSalaBtn.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v) {
+                            nowaAkt();
+                        }
+                    });
+                } else{ Toast.makeText(getApplicationContext(), "Nieodpowiedni kod QR", Toast.LENGTH_SHORT).show(); }
+            }});
         startCamera();
     }
     private void startCamera() {
@@ -92,5 +107,9 @@ public class SkanowanieActivity extends AppCompatActivity {
         }));
 
         Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner)this, cameraSelector, imageAnalysis, preview);
+    }
+    public void nowaAkt(){ //aktywność od skanowania kodu sali
+        aktSkanowanieSalaIntent= new Intent(this, SkanowanieSalaActivity1.class);
+        startActivity(aktSkanowanieSalaIntent);
     }
 }
