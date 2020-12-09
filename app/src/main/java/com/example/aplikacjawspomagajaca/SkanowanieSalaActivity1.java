@@ -8,10 +8,8 @@ import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
-
 
 import android.content.Intent;
 import android.net.Uri;
@@ -26,8 +24,9 @@ import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.concurrent.ExecutionException;
 
-public class SkanowanieActivity extends AppCompatActivity {
+public class SkanowanieSalaActivity1 extends AppCompatActivity {
 
+    Intent aktSkanowanieIntent;
     private PreviewView previewView;
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private Button qrCodeFoundButton;
@@ -35,19 +34,33 @@ public class SkanowanieActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_skanowanie);
-        previewView = findViewById(R.id.activity_previewView);
+        setContentView(R.layout.activity_skanowanie_sala1);
+        previewView = findViewById(R.id.activity_previewView1);
         cameraProviderFuture = ProcessCameraProvider.getInstance(this);
-        qrCodeFoundButton = findViewById(R.id.activity_qrCodeFoundButton);
+        qrCodeFoundButton = findViewById(R.id.activity_qrCodeFoundButton1);
         qrCodeFoundButton.setVisibility(View.INVISIBLE);
+        Button skanNauBtn=findViewById(R.id.skanNauBtn);
+        skanNauBtn.setVisibility(View.INVISIBLE);
         qrCodeFoundButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), qrCode, Toast.LENGTH_SHORT).show();
-                Log.i(MainActivity.class.getSimpleName(), "QR Code Found: " + qrCode);
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(qrCode)));
-            }
-        });
+                    @Override
+                    public void onClick(View v) {
+                        //parsowanie dla kodu QR (znacznik: SUZ_ -> sala znacznik: NUZ_ -> nauczyciel)
+                        String znacznik=qrCode.substring(0,4);
+                        if(znacznik.equals("SUZ_")){
+                            String URL=qrCode.substring(4);
+                        Toast.makeText(getApplicationContext(), URL, Toast.LENGTH_SHORT).show();
+                        //Log.i(MainActivity.class.getSimpleName(), "QR Code Found: " + qrCode);
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(URL)));
+                    }else if(znacznik.equals("NUZ_")) {
+                            Toast.makeText(getApplicationContext(), "Wykryto kod nauczyciela, można przejść do skanowania kodu nauczyciela klikając guzik poniżej", Toast.LENGTH_LONG).show();
+                            skanNauBtn.setVisibility(View.VISIBLE);
+                            skanNauBtn.setOnClickListener(new View.OnClickListener() {
+                                public void onClick(View v) {
+                                    nowaAkt();
+                                }
+                            });
+                        } else{ Toast.makeText(getApplicationContext(), "Nieodpowiedni kod QR", Toast.LENGTH_SHORT).show(); }
+                }});
         startCamera();
     }
     private void startCamera() {
@@ -91,6 +104,10 @@ public class SkanowanieActivity extends AppCompatActivity {
             }
         }));
 
-        Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner)this, cameraSelector, imageAnalysis, preview);
+        Camera camera = cameraProvider.bindToLifecycle(this, cameraSelector, imageAnalysis, preview);
+    }
+    public void nowaAkt(){ //aktywność od skanowanie kodu nauczyciela
+        aktSkanowanieIntent= new Intent(this, SkanowanieActivity.class);
+        startActivity(aktSkanowanieIntent);
     }
 }

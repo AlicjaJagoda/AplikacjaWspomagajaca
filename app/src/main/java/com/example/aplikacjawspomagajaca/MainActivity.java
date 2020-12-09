@@ -15,7 +15,9 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_CAMERA = 0;
     Button btnZeskanujKod;
+    Button skanujSalaBtn;
     Intent aktSkanowanieIntent;
+    Intent aktSkanowanieSalaIntent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +29,15 @@ public class MainActivity extends AppCompatActivity {
                 requestCamera();
                 nowaAkt();
             }
+        });
+        skanujSalaBtn=(Button) findViewById(R.id.skanujSalaBtn);
+        skanujSalaBtn.setOnClickListener(new  View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                requestCamera();
+                nowaAkt1();
+            }
+
         });
 
     }
@@ -55,8 +66,12 @@ public class MainActivity extends AppCompatActivity {
 
    // }
 
-    public void nowaAkt(){
+    public void nowaAkt(){ //aktywność od skanowanie kodu nauczyciela
         aktSkanowanieIntent= new Intent(this, SkanowanieActivity.class);
         startActivity(aktSkanowanieIntent);
+    }
+    public void nowaAkt1(){ //aktywność od skanowania kodu sali
+        aktSkanowanieSalaIntent= new Intent(this, SkanowanieSalaActivity1.class);
+        startActivity(aktSkanowanieSalaIntent);
     }
 }
