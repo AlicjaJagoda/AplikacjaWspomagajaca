@@ -1,5 +1,6 @@
 package com.example.aplikacjawspomagajaca;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -44,7 +45,9 @@ public class daneKontaktoweActivity extends AppCompatActivity {
 
         });
 
+
     }
+
     public void zadzwon(String nrTel){
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
