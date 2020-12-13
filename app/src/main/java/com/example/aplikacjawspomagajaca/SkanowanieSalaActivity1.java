@@ -49,7 +49,6 @@ public class SkanowanieSalaActivity1 extends AppCompatActivity {
                         if(znacznik.equals("SUZ_")){
                             String URL=qrCode.substring(4);
                         Toast.makeText(getApplicationContext(), URL, Toast.LENGTH_SHORT).show();
-                        //Log.i(MainActivity.class.getSimpleName(), "QR Code Found: " + qrCode);
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(URL)));
                     }else if(znacznik.equals("NUZ_")) {
                             Toast.makeText(getApplicationContext(), "Wykryto kod nauczyciela, można przejść do skanowania kodu nauczyciela klikając guzik poniżej", Toast.LENGTH_LONG).show();
@@ -69,7 +68,7 @@ public class SkanowanieSalaActivity1 extends AppCompatActivity {
                 ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
                 bindCameraPreview(cameraProvider);
             } catch (ExecutionException | InterruptedException e) {
-                Toast.makeText(this, "Error starting camera " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Błąd przy uruchomieniu kamery " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }, ContextCompat.getMainExecutor(this));
     }
