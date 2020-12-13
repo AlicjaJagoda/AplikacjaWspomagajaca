@@ -50,6 +50,7 @@ public class SkanowanieActivity extends AppCompatActivity {
                 String znacznik=qrCode.substring(0,4);
                 String email="";
                 String nrTel="";
+                String URL="";
 
                 if(znacznik.equals("NUZ_")){
                     String temp1=qrCode.substring(4,5);
@@ -71,10 +72,32 @@ public class SkanowanieActivity extends AppCompatActivity {
                         i++;
                         j++;
                     }
+                    //-XNR_
+                    i=i+4;
+                    j=j+4;
+                    temp1=qrCode.substring(i,j);
+                    temp2=qrCode.substring(i+1,j+1);
+                    temp3=qrCode.substring(i+2,j+2);
+                    temp4=qrCode.substring(i+3,j+3);
+                    temp5=qrCode.substring(i+4,j+4);
+                    while (!temp1.equals("-")&&!temp2.equals("X")&&!temp3.equals("N")&&!temp4.equals("R")&&!temp5.equals("_")){
+                        temp1=qrCode.substring(i,j);
+                        temp2=qrCode.substring(i+1,j+1);
+                        temp3=qrCode.substring(i+2,j+2);
+                        temp4=qrCode.substring(i+3,j+3);
+                        temp5=qrCode.substring(i+4,j+4);
+                        nrTel+=temp1;
+                        i++;
+                        j++;
+                        if(temp1.equals("-")){
+                            nrTel=nrTel.substring(0, nrTel.length() - 1);
+                        }
+                    }
+                    //URL
+                    URL=qrCode.substring(i+4);
+                    System.out.println(URL);
                     Toast.makeText(getApplicationContext(), "Jej zczytałeś email, email: "+email, Toast.LENGTH_LONG).show();
-                   // String URL=qrCode.substring(4);
                     //Toast.makeText(getApplicationContext(), URL, Toast.LENGTH_SHORT).show();
-                    //Log.i(MainActivity.class.getSimpleName(), "QR Code Found: " + qrCode);
                    // startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(URL)));
                 }else if(znacznik.equals("SUZ_")) {
                     Toast.makeText(getApplicationContext(), "Wykryto kod sali, można przejść do skanowania kodu sali klikając guzik poniżej", Toast.LENGTH_LONG).show();
