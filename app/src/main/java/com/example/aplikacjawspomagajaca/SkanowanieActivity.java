@@ -34,8 +34,9 @@ public class SkanowanieActivity extends AppCompatActivity {
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private Button qrCodeFoundButton;
     private String qrCode;
-    String email="";
-    String nrTel="";
+    String Nemail="";
+    String NnrTel="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,12 +49,15 @@ public class SkanowanieActivity extends AppCompatActivity {
         Button daneKontaktoweBtn=findViewById(R.id.daneKontaktoweBtn);
         daneKontaktoweBtn.setVisibility(View.INVISIBLE);
         skanSalaBtn.setVisibility(View.INVISIBLE);
+        Button uruchomStroneBtn=findViewById(R.id.uruchomStroneBtn);
+        uruchomStroneBtn.setVisibility(View.INVISIBLE);
         qrCodeFoundButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //parsowanie dla kodu QR (znacznik: SUZ_ -> sala znacznik: NUZ_ -> nauczyciel)
                 String znacznik=qrCode.substring(0,4);
-                String URL="";
+                String email="";
+                String nrTel="";
 
                 if(znacznik.equals("NUZ_")){
                     String temp1=qrCode.substring(4,5);
@@ -72,9 +76,11 @@ public class SkanowanieActivity extends AppCompatActivity {
                         if(qrCode.substring(i-2,j-2).equals("p")&&qrCode.substring(i-1,j-1).equals("l")){
                             email=email.substring(0, email.length() - 1); }
                         daneKontaktoweBtn.setVisibility(View.VISIBLE);
+                        uruchomStroneBtn.setVisibility(View.VISIBLE);
                         if(j+4>=qrCode.length()-4){
                             Toast.makeText(getApplicationContext(),"Nieprawidłowy kod QR", Toast.LENGTH_SHORT).show();
                             daneKontaktoweBtn.setVisibility(View.INVISIBLE);
+                            uruchomStroneBtn.setVisibility(View.INVISIBLE);
                             email="";
                             break;
                         }
@@ -99,10 +105,12 @@ public class SkanowanieActivity extends AppCompatActivity {
                         if(j+4>=qrCode.length()-4){
                             Toast.makeText(getApplicationContext(),"Nieprawidłowy kod QR", Toast.LENGTH_SHORT).show();
                             daneKontaktoweBtn.setVisibility(View.INVISIBLE);
+                            uruchomStroneBtn.setVisibility(View.INVISIBLE);
                             nrTel="";
                             break;
                         }
                         daneKontaktoweBtn.setVisibility(View.VISIBLE);
+                        uruchomStroneBtn.setVisibility(View.VISIBLE);
                         i++;
                         j++;
                         if(temp1.equals("-")){
@@ -111,14 +119,23 @@ public class SkanowanieActivity extends AppCompatActivity {
 
                     }
                     //URL
-                    URL=qrCode.substring(i+4);
-                    System.out.println(URL);
+                    final String URL=qrCode.substring(i+4);
+                    uruchomStroneBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(getApplicationContext(), URL, Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(URL)));
+                        }
+                    });
+
                     daneKontaktoweBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             daneKontaktoweActivity();
                         }
                     });
+                      Nemail=email;
+                      NnrTel=nrTel;
 
 
                    // startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(URL))); - uruchomienie przeglądaqrki
@@ -166,7 +183,7 @@ public class SkanowanieActivity extends AppCompatActivity {
             @Override
             public void onQRCodeFound(String _qrCode) {
                 qrCode = _qrCode;
-                qrCodeFoundButton.setVisibility(View.VISIBLE);
+               qrCodeFoundButton.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -184,8 +201,8 @@ public class SkanowanieActivity extends AppCompatActivity {
     public void daneKontaktoweActivity(){ //aktywność przenosząca do danych kontaktowych
 
         daneKontaktoweIntent=new Intent(this, daneKontaktoweActivity.class);
-        daneKontaktoweIntent.putExtra("email",email);
-        daneKontaktoweIntent.putExtra("nrTel",nrTel);
+        daneKontaktoweIntent.putExtra("email",Nemail);
+        daneKontaktoweIntent.putExtra("nrTel",NnrTel);
         startActivity(daneKontaktoweIntent);
     }
 }

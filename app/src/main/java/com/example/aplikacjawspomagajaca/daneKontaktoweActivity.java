@@ -25,12 +25,21 @@ public class daneKontaktoweActivity extends AppCompatActivity {
         final Button wybierzNrBtn= findViewById(R.id.wybierzNrBtn);
         wybierzNrBtn.setVisibility(View.VISIBLE);
         final Button wyslijEmailBtn= findViewById(R.id.wyslijEmailBtn);
-        String email = getIntent().getStringExtra("email");
-        String nrTel= getIntent().getStringExtra("nrTel");
         TextView emailText= (TextView) findViewById(R.id.emailText);
         TextView nrTelText= (TextView) findViewById(R.id.nrTelText);
+        emailText.setText(null);
+        nrTelText.setText(null);
+        String email = getIntent().getStringExtra("email");
+        String nrTel= getIntent().getStringExtra("nrTel");
+        if(emailText.equals(null)&&nrTel.equals(null)){
         emailText.setText("Email: "+email);
-        nrTelText.setText("Nr telefonu: " +nrTel);
+        nrTelText.setText("Nr telefonu: " +nrTel);}
+        else {
+            emailText.setText(null);
+            nrTelText.setText(null);
+            emailText.setText("Email: "+email);
+            nrTelText.setText("Nr telefonu: " +nrTel);
+        }
         wybierzNrBtn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
                 zadzwon(nrTel);
@@ -47,6 +56,7 @@ public class daneKontaktoweActivity extends AppCompatActivity {
 
 
     }
+
 
     public void zadzwon(String nrTel){
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
