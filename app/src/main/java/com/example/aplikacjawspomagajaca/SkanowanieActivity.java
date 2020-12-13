@@ -29,10 +29,13 @@ import java.util.concurrent.ExecutionException;
 public class SkanowanieActivity extends AppCompatActivity {
 
     Intent aktSkanowanieSalaIntent;
+    Intent daneKontaktoweIntent;
     private PreviewView previewView;
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private Button qrCodeFoundButton;
     private String qrCode;
+    String email="";
+    String nrTel="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,14 +45,14 @@ public class SkanowanieActivity extends AppCompatActivity {
         qrCodeFoundButton = findViewById(R.id.activity_qrCodeFoundButton);
         qrCodeFoundButton.setVisibility(View.INVISIBLE);
         Button skanSalaBtn=findViewById(R.id.skanSalaBtn);
+        Button daneKontaktoweBtn=findViewById(R.id.daneKontaktoweBtn);
+        daneKontaktoweBtn.setVisibility(View.INVISIBLE);
         skanSalaBtn.setVisibility(View.INVISIBLE);
         qrCodeFoundButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //parsowanie dla kodu QR (znacznik: SUZ_ -> sala znacznik: NUZ_ -> nauczyciel)
                 String znacznik=qrCode.substring(0,4);
-                String email="";
-                String nrTel="";
                 String URL="";
 
                 if(znacznik.equals("NUZ_")){
@@ -96,9 +99,16 @@ public class SkanowanieActivity extends AppCompatActivity {
                     //URL
                     URL=qrCode.substring(i+4);
                     System.out.println(URL);
-                    Toast.makeText(getApplicationContext(), "Jej zczytałeś email, email: "+email, Toast.LENGTH_LONG).show();
-                    //Toast.makeText(getApplicationContext(), URL, Toast.LENGTH_SHORT).show();
-                   // startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(URL)));
+                    daneKontaktoweBtn.setVisibility(View.VISIBLE);
+                    daneKontaktoweBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            daneKontaktoweActivity();
+                        }
+                    });
+                    //Toast.makeText(getApplicationContext(), "Jej zczytałeś email, email: "+email, Toast.LENGTH_LONG).show();
+
+                   // startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(URL))); - uruchomienie przeglądaqrki
                 }else if(znacznik.equals("SUZ_")) {
                     Toast.makeText(getApplicationContext(), "Wykryto kod sali, można przejść do skanowania kodu sali klikając guzik poniżej", Toast.LENGTH_LONG).show();
                     skanSalaBtn.setVisibility(View.VISIBLE);
@@ -117,7 +127,7 @@ public class SkanowanieActivity extends AppCompatActivity {
                 ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
                 bindCameraPreview(cameraProvider);
             } catch (ExecutionException | InterruptedException e) {
-                Toast.makeText(this, "Error starting camera " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Problem z uruchomieniem kamery " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }, ContextCompat.getMainExecutor(this));
     }
@@ -157,5 +167,12 @@ public class SkanowanieActivity extends AppCompatActivity {
     public void nowaAkt(){ //aktywność od skanowania kodu sali
         aktSkanowanieSalaIntent= new Intent(this, SkanowanieSalaActivity1.class);
         startActivity(aktSkanowanieSalaIntent);
+    }
+    public void daneKontaktoweActivity(){ //aktywność przenosząca do danych kontaktowych
+
+        daneKontaktoweIntent=new Intent(this, daneKontaktoweActivity.class);
+        daneKontaktoweIntent.putExtra("email",email);
+        daneKontaktoweIntent.putExtra("nrTel",nrTel);
+        startActivity(daneKontaktoweIntent);
     }
 }
