@@ -13,11 +13,20 @@
 
     <Button
         android:id="@+id/activity_qrCodeFoundButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="QR Code Found"
+        android:text="Znaleziono QR Code"
         app:layout_constraintBottom_toBottomOf="@+id/activity_previewView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+    <Button
+        android:id="@+id/skanSalaBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Skanowanie kodu sali"
+        app:layout_constraintBottom_toTopOf="@+id/activity_qrCodeFoundButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

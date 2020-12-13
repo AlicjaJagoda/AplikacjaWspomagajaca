@@ -28,6 +28,7 @@ import java.util.concurrent.ExecutionException;
 
 public class SkanowanieActivity extends AppCompatActivity {
 
+    Intent aktSkanowanieSalaIntent;
     private PreviewView previewView;
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private Button qrCodeFoundButton;
@@ -40,14 +41,74 @@ public class SkanowanieActivity extends AppCompatActivity {
         cameraProviderFuture = ProcessCameraProvider.getInstance(this);
         qrCodeFoundButton = findViewById(R.id.activity_qrCodeFoundButton);
         qrCodeFoundButton.setVisibility(View.INVISIBLE);
+        Button skanSalaBtn=findViewById(R.id.skanSalaBtn);
+        skanSalaBtn.setVisibility(View.INVISIBLE);
         qrCodeFoundButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), qrCode, Toast.LENGTH_SHORT).show();
-                Log.i(MainActivity.class.getSimpleName(), "QR Code Found: " + qrCode);
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(qrCode)));
-            }
-        });
+                //parsowanie dla kodu QR (znacznik: SUZ_ -> sala znacznik: NUZ_ -> nauczyciel)
+                String znacznik=qrCode.substring(0,4);
+                String email="";
+                String nrTel="";
+                String URL="";
+
+                if(znacznik.equals("NUZ_")){
+                    String temp1=qrCode.substring(4,5);
+                    String temp2=qrCode.substring(5,6);
+                    String temp3=qrCode.substring(6,7);
+                    String temp4=qrCode.substring(7,8);
+                    String temp5=qrCode.substring(8,9);
+                    int i=4, j=5;
+                    while(!temp1.equals("-")&&!temp2.equals("X")&&!temp3.equals("E")&&!temp4.equals("M")&&!temp5.equals("_")){
+                        System.out.println(temp1);
+                        temp1=qrCode.substring(i,j);
+                        temp2=qrCode.substring(i+1,j+1);
+                        temp3=qrCode.substring(i+2,j+2);
+                        temp4=qrCode.substring(i+3,j+3);
+                        temp5=qrCode.substring(i+4,j+4);
+                        email+=temp1;
+                        if(qrCode.substring(i-2,j-2).equals("p")&&qrCode.substring(i-1,j-1).equals("l")){
+                            email=email.substring(0, email.length() - 1); }
+                        i++;
+                        j++;
+                    }
+                    //-XNR_
+                    i=i+4;
+                    j=j+4;
+                    temp1=qrCode.substring(i,j);
+                    temp2=qrCode.substring(i+1,j+1);
+                    temp3=qrCode.substring(i+2,j+2);
+                    temp4=qrCode.substring(i+3,j+3);
+                    temp5=qrCode.substring(i+4,j+4);
+                    while (!temp1.equals("-")&&!temp2.equals("X")&&!temp3.equals("N")&&!temp4.equals("R")&&!temp5.equals("_")){
+                        temp1=qrCode.substring(i,j);
+                        temp2=qrCode.substring(i+1,j+1);
+                        temp3=qrCode.substring(i+2,j+2);
+                        temp4=qrCode.substring(i+3,j+3);
+                        temp5=qrCode.substring(i+4,j+4);
+                        nrTel+=temp1;
+                        i++;
+                        j++;
+                        if(temp1.equals("-")){
+                            nrTel=nrTel.substring(0, nrTel.length() - 1);
+                        }
+                    }
+                    //URL
+                    URL=qrCode.substring(i+4);
+                    System.out.println(URL);
+                    Toast.makeText(getApplicationContext(), "Jej zczytałeś email, email: "+email, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), URL, Toast.LENGTH_SHORT).show();
+                   // startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(URL)));
+                }else if(znacznik.equals("SUZ_")) {
+                    Toast.makeText(getApplicationContext(), "Wykryto kod sali, można przejść do skanowania kodu sali klikając guzik poniżej", Toast.LENGTH_LONG).show();
+                    skanSalaBtn.setVisibility(View.VISIBLE);
+                    skanSalaBtn.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v) {
+                            nowaAkt();
+                        }
+                    });
+                } else{ Toast.makeText(getApplicationContext(), "Nieodpowiedni kod QR", Toast.LENGTH_SHORT).show(); }
+            }});
         startCamera();
     }
     private void startCamera() {
@@ -92,5 +153,9 @@ public class SkanowanieActivity extends AppCompatActivity {
         }));
 
         Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner)this, cameraSelector, imageAnalysis, preview);
+    }
+    public void nowaAkt(){ //aktywność od skanowania kodu sali
+        aktSkanowanieSalaIntent= new Intent(this, SkanowanieSalaActivity1.class);
+        startActivity(aktSkanowanieSalaIntent);
     }
 }
