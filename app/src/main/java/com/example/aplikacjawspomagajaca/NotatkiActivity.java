@@ -63,6 +63,7 @@ public class NotatkiActivity extends AppCompatActivity {
     }
     public void otworzNotatkeAkt(String plik){
         edytujNotatkeIntent = new Intent(this, EdytujNotatkeActivity.class);
+        edytujNotatkeIntent.putExtra("nazwaPliku", plik);
         startActivity(edytujNotatkeIntent);
     }
 
