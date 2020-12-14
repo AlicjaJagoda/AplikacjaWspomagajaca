@@ -2,19 +2,49 @@ package com.example.aplikacjawspomagajaca;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class NotatkiActivity extends AppCompatActivity {
 
     Intent nowaNotatkaIntent;
+    Intent edytujNotatkeIntent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notatki);
-        Button nowaNotatkaBtn= (Button) findViewById(R.id.nowaNotatkaBtn);
+        String path = this.getExternalFilesDir(null).toString();
+        File directory = new File(path);
+        String[] listaNotatekString= directory.list();
+// PRÓBY Głupiego wyswietlania notatek
+        ArrayAdapter adapter = new ArrayAdapter<String>(this,
+                R.layout.activity_listview, listaNotatekString);
+
+        ListView listView = (ListView) findViewById(R.id.listaNotatek);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
+                String item = (String) listView.getItemAtPosition(position);
+                otworzNotatkeAkt(item);
+            }});
+
+
+        Button nowaNotatkaBtn = (Button) findViewById(R.id.nowaNotatkaBtn);
         nowaNotatkaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -22,11 +52,19 @@ public class NotatkiActivity extends AppCompatActivity {
             }
         });
 
+
     }
-    //TODO: lista notatek do wyświetlenia i uruchomienia
-    public void nowaNotatkaAkt(){
-        nowaNotatkaIntent=new Intent(this, nowaNotatkaActivity.class );
+
+
+    public void nowaNotatkaAkt() {
+        nowaNotatkaIntent = new Intent(this, nowaNotatkaActivity.class);
         startActivity(nowaNotatkaIntent);
+
     }
+    public void otworzNotatkeAkt(String plik){
+        edytujNotatkeIntent = new Intent(this, EdytujNotatkeActivity.class);
+        startActivity(edytujNotatkeIntent);
+    }
+
 
 }
