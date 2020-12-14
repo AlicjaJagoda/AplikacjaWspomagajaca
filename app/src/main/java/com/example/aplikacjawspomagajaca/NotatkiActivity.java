@@ -23,8 +23,10 @@ public class NotatkiActivity extends AppCompatActivity {
         });
 
     }
+    //TODO: lista notatek do wyświetlenia i uruchomienia
     public void nowaNotatkaAkt(){
         nowaNotatkaIntent=new Intent(this, nowaNotatkaActivity.class );
         startActivity(nowaNotatkaIntent);
     }
+
 }
