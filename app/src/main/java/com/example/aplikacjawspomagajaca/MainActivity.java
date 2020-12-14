@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     Button skanujSalaBtn;
     Intent aktSkanowanieIntent;
     Intent aktSkanowanieSalaIntent;
+    Intent aktNotatki;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +39,13 @@ public class MainActivity extends AppCompatActivity {
                 nowaAkt1();
             }
 
+        });
+        Button notatkiBtn = (Button) findViewById(R.id.notatkiBtn);
+        notatkiBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                notatkiAkt();
+            }
         });
 
     }
@@ -73,5 +81,9 @@ public class MainActivity extends AppCompatActivity {
     public void nowaAkt1(){ //aktywność od skanowania kodu sali
         aktSkanowanieSalaIntent= new Intent(this, SkanowanieSalaActivity1.class);
         startActivity(aktSkanowanieSalaIntent);
+    }
+    public void notatkiAkt(){
+        aktNotatki = new Intent (this, NotatkiActivity.class);
+        startActivity(aktNotatki);
     }
 }
