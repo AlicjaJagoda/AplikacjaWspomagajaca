@@ -30,6 +30,7 @@ public class SkanowanieActivity extends AppCompatActivity {
 
     Intent aktSkanowanieSalaIntent;
     Intent daneKontaktoweIntent;
+    Intent zapiszKodNauczIntent;
     private PreviewView previewView;
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private Button qrCodeFoundButton;
@@ -51,6 +52,8 @@ public class SkanowanieActivity extends AppCompatActivity {
         skanSalaBtn.setVisibility(View.INVISIBLE);
         Button uruchomStroneBtn=findViewById(R.id.uruchomStroneBtn);
         uruchomStroneBtn.setVisibility(View.INVISIBLE);
+        Button zapiszKodBtn=findViewById(R.id.zapiszKodNauczBtn);
+        zapiszKodBtn.setVisibility(View.INVISIBLE);
         qrCodeFoundButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,6 +114,7 @@ public class SkanowanieActivity extends AppCompatActivity {
                         }
                         daneKontaktoweBtn.setVisibility(View.VISIBLE);
                         uruchomStroneBtn.setVisibility(View.VISIBLE);
+                        zapiszKodBtn.setVisibility(View.VISIBLE);
                         i++;
                         j++;
                         if(temp1.equals("-")){
@@ -118,7 +122,12 @@ public class SkanowanieActivity extends AppCompatActivity {
                         }
 
                     }
-                    //URL
+                    zapiszKodBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            zapiszKodNauczAkt(qrCode);
+                        }
+                    });
                     final String URL=qrCode.substring(i+4);
                     uruchomStroneBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -204,5 +213,10 @@ public class SkanowanieActivity extends AppCompatActivity {
         daneKontaktoweIntent.putExtra("email",Nemail);
         daneKontaktoweIntent.putExtra("nrTel",NnrTel);
         startActivity(daneKontaktoweIntent);
+    }
+    public void zapiszKodNauczAkt(String kod){
+        zapiszKodNauczIntent=new Intent(this, DialogZapisActivity.class);
+        zapiszKodNauczIntent.putExtra("kod",kod);
+        startActivity(zapiszKodNauczIntent);
     }
 }
