@@ -130,6 +130,7 @@ public class SkanowanieSalaActivity1 extends AppCompatActivity {
     }
     public void zapiszKodSaliAkt(String kod){
         zapiszKodSaliIntent=new Intent(this, DialogZapisActivity.class);
+        zapiszKodSaliIntent.putExtra("kod",kod);
         startActivity(zapiszKodSaliIntent);
     }
 }
