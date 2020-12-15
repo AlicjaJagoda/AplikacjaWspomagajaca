@@ -25,8 +25,6 @@ import java.io.OutputStreamWriter;
 
 public class nowaNotatkaActivity extends AppCompatActivity {
 
-    Intent zapiszIntent;
-    Intent wrocIntent;
     String tytulNotatkiZapis;
     String trescNotatkiZapis;
     @Override
@@ -44,7 +42,7 @@ public class nowaNotatkaActivity extends AppCompatActivity {
         wrocBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                wrocDoNotatek();
+                finish();
             }
         });
     }
@@ -91,10 +89,6 @@ public class nowaNotatkaActivity extends AppCompatActivity {
             Log.e("Exception", "Błąd zapisu pliku " + e.toString());
         }
 
-    }
-    public void wrocDoNotatek(){
-        wrocIntent=new Intent(this, NotatkiActivity.class);
-        startActivity(wrocIntent);
     }
 
 }

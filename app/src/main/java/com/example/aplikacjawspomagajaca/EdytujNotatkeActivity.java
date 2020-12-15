@@ -21,7 +21,6 @@ import java.io.IOException;
 
 public class EdytujNotatkeActivity extends AppCompatActivity {
 
-    Intent wrocIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +55,7 @@ public class EdytujNotatkeActivity extends AppCompatActivity {
         wrocBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                wrocDoNotatek();
+                finish();
             }
         });
         usunBtn.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +64,7 @@ public class EdytujNotatkeActivity extends AppCompatActivity {
                 notatka.delete();
                 if(!notatka.exists()){
                     Toast.makeText(EdytujNotatkeActivity.this,"Poprawnie usunięto notatkę.", Toast.LENGTH_SHORT).show();
-                    wrocDoNotatek();
+                    finish();
                 }else {
                     Toast.makeText(EdytujNotatkeActivity.this,"Nie można usunąć notatki.", Toast.LENGTH_SHORT).show();
                 }
@@ -93,8 +92,5 @@ public class EdytujNotatkeActivity extends AppCompatActivity {
 
 
 }
-    public void wrocDoNotatek(){
-        wrocIntent=new Intent(this, NotatkiActivity.class);
-        startActivity(wrocIntent);
-    }
+
 }
