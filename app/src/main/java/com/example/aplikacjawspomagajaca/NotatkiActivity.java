@@ -30,7 +30,9 @@ public class NotatkiActivity extends AppCompatActivity {
         String path = this.getExternalFilesDir(null).toString();
         File directory = new File(path);
         String[] listaNotatekString= directory.list();
-// PRÓBY Głupiego wyswietlania notatek
+        for(int i=0;i<listaNotatekString.length;i++){
+            listaNotatekString[i]=listaNotatekString[i].substring(0,listaNotatekString[i].length()-4);
+        }
         ArrayAdapter adapter = new ArrayAdapter<String>(this,
                 R.layout.activity_listview, listaNotatekString);
 

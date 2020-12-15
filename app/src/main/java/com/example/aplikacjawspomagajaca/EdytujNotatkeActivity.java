@@ -34,7 +34,7 @@ public class EdytujNotatkeActivity extends AppCompatActivity {
         Button wrocBtn=findViewById(R.id.wrocEdycjaBtn);
         String nazwaPliku = getIntent().getStringExtra("nazwaPliku");
         String trescNotatki = "";
-        File notatka = new File(this.getExternalFilesDir(null), nazwaPliku);
+        File notatka = new File(this.getExternalFilesDir(null), nazwaPliku+".txt");
         if (notatka != null) {
             StringBuilder stringBuilder = new StringBuilder();
             BufferedReader reader = null;
@@ -50,7 +50,7 @@ public class EdytujNotatkeActivity extends AppCompatActivity {
             } catch (Exception e) {
                 Log.e("ReadWriteFile", "Nie można odczytać pliku "+nazwaPliku);
             }
-            tytNotatkiEdytuj.setText(nazwaPliku.substring(0, nazwaPliku.length()-4));
+            tytNotatkiEdytuj.setText(nazwaPliku);
             treNotatkiEdytuj.setText(trescNotatki);
         }
         wrocBtn.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +76,7 @@ public class EdytujNotatkeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     notatka.delete();
-                    File notatkaPoEdycji=new File(EdytujNotatkeActivity.this.getExternalFilesDir(null),tytNotatkiEdytuj.getText().toString());
+                    File notatkaPoEdycji=new File(EdytujNotatkeActivity.this.getExternalFilesDir(null),tytNotatkiEdytuj.getText().toString()+".txt");
                     BufferedWriter writer = new BufferedWriter(new FileWriter(notatkaPoEdycji, true /*append*/));
                     writer.write(treNotatkiEdytuj.getText().toString());
                     writer.close();
