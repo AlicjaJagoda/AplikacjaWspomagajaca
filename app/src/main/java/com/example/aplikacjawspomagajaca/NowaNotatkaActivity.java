@@ -27,7 +27,7 @@ public class NowaNotatkaActivity extends AppCompatActivity {
 
     String tytulNotatkiZapis;
     String trescNotatkiZapis;
-
+    Intent NotatkiIntent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +43,7 @@ public class NowaNotatkaActivity extends AppCompatActivity {
         wrocBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                wrocDoNotatek();
             }
         });
     }
@@ -90,6 +90,10 @@ public class NowaNotatkaActivity extends AppCompatActivity {
             Log.e("Exception", "Błąd zapisu pliku " + e.toString());
         }
 
+    }
+    public void wrocDoNotatek(){
+        NotatkiIntent=new Intent(this, NotatkiActivity.class);
+        startActivity(NotatkiIntent);
     }
 
 }

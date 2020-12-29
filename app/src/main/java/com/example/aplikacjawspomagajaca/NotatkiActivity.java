@@ -37,6 +37,7 @@ public class NotatkiActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String item = (String) listView.getItemAtPosition(position);
                 otworzNotatkeAkt(item);
+                finish();
             }
         });
 
