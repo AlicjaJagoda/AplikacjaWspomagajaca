@@ -2,6 +2,7 @@ package com.example.aplikacjawspomagajaca;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,6 +13,7 @@ import java.io.File;
 
 public class ZapisaneKodyActivity extends AppCompatActivity {
 
+    Intent otworzKodIntent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +38,9 @@ public class ZapisaneKodyActivity extends AppCompatActivity {
         });
     }
     public void otworzKod(String plik){
-        
+      otworzKodIntent = new Intent(this, OdczytZapisanegoKoduActivity.class);
+      otworzKodIntent.putExtra("path", plik);
+      startActivity(otworzKodIntent);
     }
 
 }
