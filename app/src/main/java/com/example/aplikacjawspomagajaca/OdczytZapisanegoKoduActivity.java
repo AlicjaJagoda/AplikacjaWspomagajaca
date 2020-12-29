@@ -20,6 +20,7 @@ public class OdczytZapisanegoKoduActivity extends AppCompatActivity {
     String Nemail = "";
     String NnrTel = "";
     Intent DaneKontaktoweIntent;
+    Intent WrocDoKodowIntent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +31,7 @@ public class OdczytZapisanegoKoduActivity extends AppCompatActivity {
         przejdzNaStroneSali.setVisibility(View.INVISIBLE);
         daneKontaktoweBtn.setVisibility(View.INVISIBLE);
         uruchomStroneBtn.setVisibility(View.INVISIBLE);
+        Button usunZapisanyKod= findViewById(R.id.usunZapisanyKod);
         TextView kodQRTV=(TextView) findViewById(R.id.kodQR);
         kodQRTV.setText(getIntent().getStringExtra("path"));
         String path = this.getFilesDir()+"/"+getIntent().getStringExtra("path")+".txt";
@@ -142,6 +144,18 @@ public class OdczytZapisanegoKoduActivity extends AppCompatActivity {
 
             }
         }
+        usunZapisanyKod.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                kodQR.delete();
+                if (!kodQR.exists()) {
+                    Toast.makeText(OdczytZapisanegoKoduActivity.this, "Poprawnie usunięto kod.", Toast.LENGTH_SHORT).show();
+                    wrocDoKodow();
+                } else {
+                    Toast.makeText(OdczytZapisanegoKoduActivity.this, "Nie można usunąć kodu.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
     public  void daneKontaktoweAkt(){
         DaneKontaktoweIntent=new Intent(this, DaneKontaktoweActivity.class);
@@ -149,5 +163,10 @@ public class OdczytZapisanegoKoduActivity extends AppCompatActivity {
         DaneKontaktoweIntent.putExtra("nrTel", NnrTel);
         startActivity(DaneKontaktoweIntent);
 
+    }
+    public void wrocDoKodow(){
+        WrocDoKodowIntent= new Intent(this,ZapisaneKodyActivity.class);
+        startActivity(WrocDoKodowIntent);
+        finish();
     }
 }
