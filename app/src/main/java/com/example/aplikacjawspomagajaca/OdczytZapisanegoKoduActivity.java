@@ -167,6 +167,5 @@ public class OdczytZapisanegoKoduActivity extends AppCompatActivity {
     public void wrocDoKodow(){
         WrocDoKodowIntent= new Intent(this,ZapisaneKodyActivity.class);
         startActivity(WrocDoKodowIntent);
-        finish();
     }
 }
