@@ -21,17 +21,17 @@ public class DialogZapisActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dialog_zapis);
-        Button zapiszKod=findViewById(R.id.zapiszKodDialogBtn);
-        EditText nazwaKoduPole=findViewById(R.id.nazwaKodu);
-        String kod= getIntent().getStringExtra("kod");
+        Button zapiszKod = findViewById(R.id.zapiszKodDialogBtn);
+        EditText nazwaKoduPole = findViewById(R.id.nazwaKodu);
+        String kod = getIntent().getStringExtra("kod");
         zapiszKod.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               //po zapisie kodu wracamy do poprzedniej aktywności
-                String nazwaKodu=nazwaKoduPole.getText().toString();
+                //po zapisie kodu wracamy do poprzedniej aktywności
+                String nazwaKodu = nazwaKoduPole.getText().toString();
                 try {
-                    File kodDoZapisu = new File(getFilesDir()+"/"+nazwaKodu+".txt");
-                    if (!kodDoZapisu.exists()){
+                    File kodDoZapisu = new File(getFilesDir() + "/" + nazwaKodu + ".txt");
+                    if (!kodDoZapisu.exists()) {
                         kodDoZapisu.createNewFile();
                         BufferedWriter writer = new BufferedWriter(new FileWriter(kodDoZapisu, true /*append*/));
                         writer.write(kod);
@@ -40,7 +40,7 @@ public class DialogZapisActivity extends AppCompatActivity {
                                 new String[]{kodDoZapisu.toString()},
                                 null,
                                 null);
-                        Toast.makeText(DialogZapisActivity.this, "Kod "+nazwaKodu+" został zapisany.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DialogZapisActivity.this, "Kod " + nazwaKodu + " został zapisany.", Toast.LENGTH_SHORT).show();
                     } else {
                         kodDoZapisu.delete();
                         BufferedWriter writer = new BufferedWriter(new FileWriter(kodDoZapisu, true /*append*/));
@@ -50,11 +50,10 @@ public class DialogZapisActivity extends AppCompatActivity {
                                 new String[]{kodDoZapisu.toString()},
                                 null,
                                 null);
-                        Toast.makeText(DialogZapisActivity.this, "Kod "+nazwaKodu+" został nadpisany", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DialogZapisActivity.this, "Kod " + nazwaKodu + " został nadpisany", Toast.LENGTH_SHORT).show();
                     }
 
-                }
-                catch (IOException e) {
+                } catch (IOException e) {
                     Log.e("Exception", "Błąd zapisu pliku " + e.toString());
                 }
                 finish();

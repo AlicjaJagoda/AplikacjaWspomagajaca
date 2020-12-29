@@ -26,14 +26,14 @@ public class EdytujNotatkeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edytuj_notatke);
-        EditText tytNotatkiEdytuj=findViewById(R.id.tytulNotatkiEdytuj);
-        EditText treNotatkiEdytuj=findViewById(R.id.trescNotatkiEdytuj);
+        EditText tytNotatkiEdytuj = findViewById(R.id.tytulNotatkiEdytuj);
+        EditText treNotatkiEdytuj = findViewById(R.id.trescNotatkiEdytuj);
         Button zapiszBtn = findViewById(R.id.zapiszEdycjeBtn);
-        Button usunBtn=findViewById(R.id.usunNotatke);
-        Button wrocBtn=findViewById(R.id.wrocEdycjaBtn);
+        Button usunBtn = findViewById(R.id.usunNotatke);
+        Button wrocBtn = findViewById(R.id.wrocEdycjaBtn);
         String nazwaPliku = getIntent().getStringExtra("nazwaPliku");
         String trescNotatki = "";
-        File notatka = new File(this.getExternalFilesDir(null), nazwaPliku+".txt");
+        File notatka = new File(this.getExternalFilesDir(null), nazwaPliku + ".txt");
         if (notatka != null) {
             StringBuilder stringBuilder = new StringBuilder();
             BufferedReader reader = null;
@@ -42,12 +42,12 @@ public class EdytujNotatkeActivity extends AppCompatActivity {
                 String linia;
 
                 while ((linia = reader.readLine()) != null) {
-                    trescNotatki += linia.toString();
+                    trescNotatki += linia;
                     trescNotatki += "\n";
                 }
                 reader.close();
             } catch (Exception e) {
-                Log.e("ReadWriteFile", "Nie można odczytać pliku "+nazwaPliku);
+                Log.e("ReadWriteFile", "Nie można odczytać pliku " + nazwaPliku);
             }
             tytNotatkiEdytuj.setText(nazwaPliku);
             treNotatkiEdytuj.setText(trescNotatki);
@@ -62,11 +62,11 @@ public class EdytujNotatkeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 notatka.delete();
-                if(!notatka.exists()){
-                    Toast.makeText(EdytujNotatkeActivity.this,"Poprawnie usunięto notatkę.", Toast.LENGTH_SHORT).show();
+                if (!notatka.exists()) {
+                    Toast.makeText(EdytujNotatkeActivity.this, "Poprawnie usunięto notatkę.", Toast.LENGTH_SHORT).show();
                     finish();
-                }else {
-                    Toast.makeText(EdytujNotatkeActivity.this,"Nie można usunąć notatki.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(EdytujNotatkeActivity.this, "Nie można usunąć notatki.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -75,7 +75,7 @@ public class EdytujNotatkeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     notatka.delete();
-                    File notatkaPoEdycji=new File(EdytujNotatkeActivity.this.getExternalFilesDir(null),tytNotatkiEdytuj.getText().toString()+".txt");
+                    File notatkaPoEdycji = new File(EdytujNotatkeActivity.this.getExternalFilesDir(null), tytNotatkiEdytuj.getText().toString() + ".txt");
                     BufferedWriter writer = new BufferedWriter(new FileWriter(notatkaPoEdycji, true /*append*/));
                     writer.write(treNotatkiEdytuj.getText().toString());
                     writer.close();
@@ -88,9 +88,10 @@ public class EdytujNotatkeActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     Log.e("Exception", "Błąd zapisu pliku " + e.toString());
                 }
-            }});
+            }
+        });
 
 
-}
+    }
 
 }

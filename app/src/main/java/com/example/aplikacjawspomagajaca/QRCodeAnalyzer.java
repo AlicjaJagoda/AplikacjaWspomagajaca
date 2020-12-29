@@ -25,6 +25,7 @@ class QRCodeAnalyzer implements ImageAnalysis.Analyzer {
     public QRCodeAnalyzer(QRCodeListener listener) {
         this.listener = listener;
     }
+
     @Override
     public void analyze(@NonNull ImageProxy image) {
         if (image.getFormat() == YUV_420_888 || image.getFormat() == YUV_422_888 || image.getFormat() == YUV_444_888) {

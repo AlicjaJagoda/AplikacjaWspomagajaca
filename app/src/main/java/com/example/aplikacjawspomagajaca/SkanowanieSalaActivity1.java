@@ -32,6 +32,7 @@ public class SkanowanieSalaActivity1 extends AppCompatActivity {
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private Button qrCodeFoundButton;
     private String qrCode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,47 +41,51 @@ public class SkanowanieSalaActivity1 extends AppCompatActivity {
         cameraProviderFuture = ProcessCameraProvider.getInstance(this);
         qrCodeFoundButton = findViewById(R.id.activity_qrCodeFoundButton1);
         qrCodeFoundButton.setVisibility(View.INVISIBLE);
-        Button skanNauBtn=findViewById(R.id.skanNauBtn);
+        Button skanNauBtn = findViewById(R.id.skanNauBtn);
         skanNauBtn.setVisibility(View.INVISIBLE);
-        Button zapiszKodSali=findViewById(R.id.zapiszKodSalaBtn);
-        Button przejdzNaStroneSali=findViewById(R.id.przejdzNaPlanSaliBtn);
+        Button zapiszKodSali = findViewById(R.id.zapiszKodSalaBtn);
+        Button przejdzNaStroneSali = findViewById(R.id.przejdzNaPlanSaliBtn);
         zapiszKodSali.setVisibility(View.INVISIBLE);
         przejdzNaStroneSali.setVisibility(View.INVISIBLE);
         qrCodeFoundButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //parsowanie dla kodu QR (znacznik: SUZ_ -> sala znacznik: NUZ_ -> nauczyciel)
-                        String znacznik=qrCode.substring(0,4);
-                        if(znacznik.equals("SUZ_")){
-                            String URL=qrCode.substring(4);
-                            zapiszKodSali.setVisibility(View.VISIBLE);
-                            przejdzNaStroneSali.setVisibility(View.VISIBLE);
-                            przejdzNaStroneSali.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(URL)));
-                                }
-                            });
-                            zapiszKodSali.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    zapiszKodSaliAkt(qrCode);
+            @Override
+            public void onClick(View v) {
+                //parsowanie dla kodu QR (znacznik: SUZ_ -> sala znacznik: NUZ_ -> nauczyciel)
+                String znacznik = qrCode.substring(0, 4);
+                if (znacznik.equals("SUZ_")) {
+                    String URL = qrCode.substring(4);
+                    zapiszKodSali.setVisibility(View.VISIBLE);
+                    przejdzNaStroneSali.setVisibility(View.VISIBLE);
+                    przejdzNaStroneSali.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(URL)));
+                        }
+                    });
+                    zapiszKodSali.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            zapiszKodSaliAkt(qrCode);
 
-                                }
-                            });
+                        }
+                    });
 
-                    }else if(znacznik.equals("NUZ_")) {
-                            Toast.makeText(getApplicationContext(), "Wykryto kod nauczyciela, można przejść do skanowania kodu nauczyciela klikając guzik poniżej", Toast.LENGTH_LONG).show();
-                            skanNauBtn.setVisibility(View.VISIBLE);
-                            skanNauBtn.setOnClickListener(new View.OnClickListener() {
-                                public void onClick(View v) {
-                                    nowaAkt();
-                                }
-                            });
-                        } else{ Toast.makeText(getApplicationContext(), "Nieodpowiedni kod QR", Toast.LENGTH_SHORT).show(); }
-                }});
+                } else if (znacznik.equals("NUZ_")) {
+                    Toast.makeText(getApplicationContext(), "Wykryto kod nauczyciela, można przejść do skanowania kodu nauczyciela klikając guzik poniżej", Toast.LENGTH_LONG).show();
+                    skanNauBtn.setVisibility(View.VISIBLE);
+                    skanNauBtn.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v) {
+                            nowaAkt();
+                        }
+                    });
+                } else {
+                    Toast.makeText(getApplicationContext(), "Nieodpowiedni kod QR", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         startCamera();
     }
+
     private void startCamera() {
         cameraProviderFuture.addListener(() -> {
             try {
@@ -124,13 +129,15 @@ public class SkanowanieSalaActivity1 extends AppCompatActivity {
 
         Camera camera = cameraProvider.bindToLifecycle(this, cameraSelector, imageAnalysis, preview);
     }
-    public void nowaAkt(){ //aktywność od skanowanie kodu nauczyciela
-        aktSkanowanieIntent= new Intent(this, SkanowanieActivity.class);
+
+    public void nowaAkt() { //aktywność od skanowanie kodu nauczyciela
+        aktSkanowanieIntent = new Intent(this, SkanowanieActivity.class);
         startActivity(aktSkanowanieIntent);
     }
-    public void zapiszKodSaliAkt(String kod){
-        zapiszKodSaliIntent=new Intent(this, DialogZapisActivity.class);
-        zapiszKodSaliIntent.putExtra("kod",kod);
+
+    public void zapiszKodSaliAkt(String kod) {
+        zapiszKodSaliIntent = new Intent(this, DialogZapisActivity.class);
+        zapiszKodSaliIntent.putExtra("kod", kod);
         startActivity(zapiszKodSaliIntent);
     }
 }

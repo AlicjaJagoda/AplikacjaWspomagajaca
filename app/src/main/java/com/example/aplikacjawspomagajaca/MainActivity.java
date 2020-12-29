@@ -19,11 +19,13 @@ public class MainActivity extends AppCompatActivity {
     Intent aktSkanowanieIntent;
     Intent aktSkanowanieSalaIntent;
     Intent aktNotatki;
+    Intent aktZapisaneKody;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btnZeskanujKod=(Button) findViewById(R.id.btnZeskanujKod);
+        btnZeskanujKod = (Button) findViewById(R.id.btnZeskanujKod);
         btnZeskanujKod.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -31,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
                 nowaAkt();
             }
         });
-        skanujSalaBtn=(Button) findViewById(R.id.skanujSalaBtn);
-        skanujSalaBtn.setOnClickListener(new  View.OnClickListener(){
+        skanujSalaBtn = (Button) findViewById(R.id.skanujSalaBtn);
+        skanujSalaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 requestCamera();
@@ -47,8 +49,16 @@ public class MainActivity extends AppCompatActivity {
                 notatkiAkt();
             }
         });
+        Button zapisaneKody=(Button) findViewById(R.id.zapisaneKodyBtn);
+        zapisaneKody.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                zapisaneKodyAkt();
+            }
+        });
 
     }
+
     private void requestCamera() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             //startCamera();
@@ -60,30 +70,38 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == PERMISSION_REQUEST_CAMERA) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-               // startCamera();
+                // startCamera();
             } else {
                 Toast.makeText(this, "Camera Permission Denied", Toast.LENGTH_SHORT).show();
             }
         }
     }
-   // private void startCamera() {
+    // private void startCamera() {
 
-   // }
+    // }
 
-    public void nowaAkt(){ //aktywność od skanowanie kodu nauczyciela
-        aktSkanowanieIntent= new Intent(this, SkanowanieActivity.class);
+    public void nowaAkt() { //aktywność od skanowanie kodu nauczyciela
+        aktSkanowanieIntent = new Intent(this, SkanowanieActivity.class);
         startActivity(aktSkanowanieIntent);
     }
-    public void nowaAkt1(){ //aktywność od skanowania kodu sali
-        aktSkanowanieSalaIntent= new Intent(this, SkanowanieSalaActivity1.class);
+
+    public void nowaAkt1() { //aktywność od skanowania kodu sali
+        aktSkanowanieSalaIntent = new Intent(this, SkanowanieSalaActivity1.class);
         startActivity(aktSkanowanieSalaIntent);
     }
-    public void notatkiAkt(){
-        aktNotatki = new Intent (this, NotatkiActivity.class);
+
+    public void notatkiAkt() {
+        aktNotatki = new Intent(this, NotatkiActivity.class);
         startActivity(aktNotatki);
+    }
+
+    public void zapisaneKodyAkt() {
+        aktZapisaneKody = new Intent(this, ZapisaneKodyActivity.class);
+        startActivity(aktZapisaneKody);
     }
 }

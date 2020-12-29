@@ -23,10 +23,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
-public class nowaNotatkaActivity extends AppCompatActivity {
+public class NowaNotatkaActivity extends AppCompatActivity {
 
     String tytulNotatkiZapis;
     String trescNotatkiZapis;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,31 +48,32 @@ public class nowaNotatkaActivity extends AppCompatActivity {
         });
     }
 
-    public void zapiszNotatke(){
+    public void zapiszNotatke() {
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-        }if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
         }
 
 
         EditText tytulNotatkiEditText = findViewById(R.id.tytulNotatki);
-        tytulNotatkiZapis=tytulNotatkiEditText.getText().toString();
+        tytulNotatkiZapis = tytulNotatkiEditText.getText().toString();
         EditText trescNotatkiEditText = findViewById(R.id.trescNotatki);
-        trescNotatkiZapis=trescNotatkiEditText.getText().toString();
+        trescNotatkiZapis = trescNotatkiEditText.getText().toString();
         try {
-            File notatka = new File(this.getExternalFilesDir(null), tytulNotatkiZapis+".txt");
-            if (!notatka.exists()){
+            File notatka = new File(this.getExternalFilesDir(null), tytulNotatkiZapis + ".txt");
+            if (!notatka.exists()) {
                 notatka.createNewFile();
-            BufferedWriter writer = new BufferedWriter(new FileWriter(notatka, true /*append*/));
-            writer.write(trescNotatkiZapis);
-            writer.close();
-            MediaScannerConnection.scanFile(this,
-                    new String[]{notatka.toString()},
-                    null,
-                    null);
-          Toast.makeText(this, "Notatka "+tytulNotatkiZapis+".txt została zapisana.", Toast.LENGTH_SHORT).show();
+                BufferedWriter writer = new BufferedWriter(new FileWriter(notatka, true /*append*/));
+                writer.write(trescNotatkiZapis);
+                writer.close();
+                MediaScannerConnection.scanFile(this,
+                        new String[]{notatka.toString()},
+                        null,
+                        null);
+                Toast.makeText(this, "Notatka " + tytulNotatkiZapis + ".txt została zapisana.", Toast.LENGTH_SHORT).show();
             } else {
                 notatka.delete();
                 BufferedWriter writer = new BufferedWriter(new FileWriter(notatka, true /*append*/));
@@ -81,11 +83,10 @@ public class nowaNotatkaActivity extends AppCompatActivity {
                         new String[]{notatka.toString()},
                         null,
                         null);
-                Toast.makeText(this, "Notatka "+tytulNotatkiZapis+".txt została nadpisana", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Notatka " + tytulNotatkiZapis + ".txt została nadpisana", Toast.LENGTH_SHORT).show();
             }
 
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             Log.e("Exception", "Błąd zapisu pliku " + e.toString());
         }
 
