@@ -2,21 +2,15 @@ package com.example.aplikacjawspomagajaca;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class NotatkiActivity extends AppCompatActivity {
 
@@ -29,9 +23,9 @@ public class NotatkiActivity extends AppCompatActivity {
         setContentView(R.layout.activity_notatki);
         String path = this.getExternalFilesDir(null).toString();
         File directory = new File(path);
-        String[] listaNotatekString= directory.list();
-        for(int i=0;i<listaNotatekString.length;i++){
-            listaNotatekString[i]=listaNotatekString[i].substring(0,listaNotatekString[i].length()-4);
+        String[] listaNotatekString = directory.list();
+        for (int i = 0; i < listaNotatekString.length; i++) {
+            listaNotatekString[i] = listaNotatekString[i].substring(0, listaNotatekString[i].length() - 4);
         }
         ArrayAdapter adapter = new ArrayAdapter<String>(this,
                 R.layout.activity_listview, listaNotatekString);
@@ -40,10 +34,12 @@ public class NotatkiActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String item = (String) listView.getItemAtPosition(position);
                 otworzNotatkeAkt(item);
-            }});
+                finish();
+            }
+        });
 
 
         Button nowaNotatkaBtn = (Button) findViewById(R.id.nowaNotatkaBtn);
@@ -59,11 +55,12 @@ public class NotatkiActivity extends AppCompatActivity {
 
 
     public void nowaNotatkaAkt() {
-        nowaNotatkaIntent = new Intent(this, nowaNotatkaActivity.class);
+        nowaNotatkaIntent = new Intent(this, NowaNotatkaActivity.class);
         startActivity(nowaNotatkaIntent);
 
     }
-    public void otworzNotatkeAkt(String plik){
+
+    public void otworzNotatkeAkt(String plik) {
         edytujNotatkeIntent = new Intent(this, EdytujNotatkeActivity.class);
         edytujNotatkeIntent.putExtra("nazwaPliku", plik);
         startActivity(edytujNotatkeIntent);
