@@ -14,7 +14,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/button"/>
     <Button
         android:id="@+id/daneKontaktoweZapKodBtn"
         android:layout_width="0dp"
@@ -23,7 +24,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/button"/>
     <Button
         android:id="@+id/uruchomStroneZapKodBtn"
         android:layout_width="0dp"
@@ -31,7 +33,8 @@
         android:text="Przejdź na plan"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/daneKontaktoweZapKodBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/daneKontaktoweZapKodBtn"
+        android:background="@drawable/button"/>
 
     <TextView
         android:id="@+id/kodQR"
@@ -49,6 +52,7 @@
         android:layout_height="wrap_content"
         android:text="Usuń zapisany kod"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/button"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

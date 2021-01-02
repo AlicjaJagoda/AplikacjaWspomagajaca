@@ -40,7 +40,8 @@
         android:layout_height="wrap_content"
         android:text="Zapisz"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/button"/>
 
     <Button
         android:id="@+id/wrocEdycjaBtn"
@@ -48,7 +49,8 @@
         android:layout_height="wrap_content"
         android:text="Wróć"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/button"/>
 
     <Button
         android:id="@+id/usunNotatke"
@@ -57,6 +59,7 @@
         android:text="Usuń"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/zapiszEdycjeBtn"
-        app:layout_constraintStart_toEndOf="@+id/wrocEdycjaBtn" />
+        app:layout_constraintStart_toEndOf="@+id/wrocEdycjaBtn"
+        android:background="@drawable/button"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
