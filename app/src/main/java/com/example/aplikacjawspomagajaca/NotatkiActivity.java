@@ -55,6 +55,7 @@ public class NotatkiActivity extends AppCompatActivity {
 
 
     public void nowaNotatkaAkt() {
+        finish();
         nowaNotatkaIntent = new Intent(this, NowaNotatkaActivity.class);
         startActivity(nowaNotatkaIntent);
 

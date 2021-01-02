@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     Intent aktSkanowanieSalaIntent;
     Intent aktNotatki;
     Intent aktZapisaneKody;
+    Intent OAplikacjiIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 notatkiAkt();
+
             }
         });
         Button zapisaneKody=(Button) findViewById(R.id.zapisaneKodyBtn);
@@ -56,6 +58,14 @@ public class MainActivity extends AppCompatActivity {
                 zapisaneKodyAkt();
             }
         });
+        Button oAplikacjiBtn=(Button) findViewById(R.id.oAplikacjiBtn);
+        oAplikacjiBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OAplikacjiAkt();
+            }
+        });
+
 
     }
 
@@ -81,9 +91,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-    // private void startCamera() {
 
-    // }
 
     public void nowaAkt() { //aktywność od skanowanie kodu nauczyciela
         aktSkanowanieIntent = new Intent(this, SkanowanieActivity.class);
@@ -103,5 +111,9 @@ public class MainActivity extends AppCompatActivity {
     public void zapisaneKodyAkt() {
         aktZapisaneKody = new Intent(this, ZapisaneKodyActivity.class);
         startActivity(aktZapisaneKody);
+    }
+    public void OAplikacjiAkt(){
+        OAplikacjiIntent= new Intent(this, OAplikacjiActivity.class);
+        startActivity(OAplikacjiIntent);
     }
 }

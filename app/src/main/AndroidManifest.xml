@@ -16,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".OdczytZapisanegoKoduActivity"></activity>
+        <activity android:name=".OAplikacjiActivity"></activity>
+        <activity android:name=".OdczytZapisanegoKoduActivity" />
         <activity android:name=".ZapisaneKodyActivity" />
         <activity android:name=".DialogZapisActivity" />
         <activity android:name=".EdytujNotatkeActivity" />
