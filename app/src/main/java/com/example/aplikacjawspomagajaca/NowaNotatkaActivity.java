@@ -25,7 +25,7 @@ import java.io.OutputStreamWriter;
 
 public class NowaNotatkaActivity extends AppCompatActivity {
 
-    String tytulNotatkiZapis;
+    String tytulNotatkiZapis="";
     String trescNotatkiZapis;
     Intent NotatkiIntent;
     @Override
@@ -37,7 +37,13 @@ public class NowaNotatkaActivity extends AppCompatActivity {
         zapiszBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                zapiszNotatke();
+                EditText tytulNotatkiEditText = findViewById(R.id.tytulNotatki);
+                tytulNotatkiZapis = tytulNotatkiEditText.getText().toString();
+                EditText trescNotatkiEditText = findViewById(R.id.trescNotatki);
+                trescNotatkiZapis = trescNotatkiEditText.getText().toString();
+                if(!tytulNotatkiZapis.equals("")){
+                    zapiszNotatke();}
+                else Toast.makeText(NowaNotatkaActivity.this,"Nie podano tytułu notatki!", Toast.LENGTH_SHORT).show();
             }
         });
         wrocBtn.setOnClickListener(new View.OnClickListener() {
@@ -58,10 +64,6 @@ public class NowaNotatkaActivity extends AppCompatActivity {
         }
 
 
-        EditText tytulNotatkiEditText = findViewById(R.id.tytulNotatki);
-        tytulNotatkiZapis = tytulNotatkiEditText.getText().toString();
-        EditText trescNotatkiEditText = findViewById(R.id.trescNotatki);
-        trescNotatkiZapis = trescNotatkiEditText.getText().toString();
         try {
             File notatka = new File(this.getExternalFilesDir(null), tytulNotatkiZapis + ".txt");
             if (!notatka.exists()) {
@@ -92,6 +94,7 @@ public class NowaNotatkaActivity extends AppCompatActivity {
 
     }
     public void wrocDoNotatek(){
+        finish();
         NotatkiIntent=new Intent(this, NotatkiActivity.class);
         startActivity(NotatkiIntent);
     }
