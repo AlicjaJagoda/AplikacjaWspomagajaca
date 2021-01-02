@@ -74,21 +74,24 @@ public class EdytujNotatkeActivity extends AppCompatActivity {
         zapiszBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    notatka.delete();
-                    File notatkaPoEdycji = new File(EdytujNotatkeActivity.this.getExternalFilesDir(null), tytNotatkiEdytuj.getText().toString() + ".txt");
-                    BufferedWriter writer = new BufferedWriter(new FileWriter(notatkaPoEdycji, true /*append*/));
-                    writer.write(treNotatkiEdytuj.getText().toString());
-                    writer.close();
-                    MediaScannerConnection.scanFile(EdytujNotatkeActivity.this,
-                            new String[]{notatkaPoEdycji.toString()},
-                            null,
-                            null);
-                    Toast.makeText(EdytujNotatkeActivity.this, "Notatka " + tytNotatkiEdytuj.getText().toString() + ".txt została zedytowana", Toast.LENGTH_SHORT).show();
+                if (!tytNotatkiEdytuj.getText().toString().equals("")) {
+                    try {
+                        notatka.delete();
+                        File notatkaPoEdycji = new File(EdytujNotatkeActivity.this.getExternalFilesDir(null), tytNotatkiEdytuj.getText().toString() + ".txt");
+                        BufferedWriter writer = new BufferedWriter(new FileWriter(notatkaPoEdycji, true /*append*/));
+                        writer.write(treNotatkiEdytuj.getText().toString());
+                        writer.close();
+                        MediaScannerConnection.scanFile(EdytujNotatkeActivity.this,
+                                new String[]{notatkaPoEdycji.toString()},
+                                null,
+                                null);
+                        Toast.makeText(EdytujNotatkeActivity.this, "Notatka " + tytNotatkiEdytuj.getText().toString() + ".txt została zedytowana", Toast.LENGTH_SHORT).show();
 
-                } catch (IOException e) {
-                    Log.e("Exception", "Błąd zapisu pliku " + e.toString());
-                }
+                    } catch (IOException e) {
+                        Log.e("Exception", "Błąd zapisu pliku " + e.toString());
+                    }
+                } else
+                    Toast.makeText(EdytujNotatkeActivity.this, "Nie podano tytułu!", Toast.LENGTH_SHORT).show();
             }
         });
 
