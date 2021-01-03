@@ -99,7 +99,8 @@ public class EdytujNotatkeActivity extends AppCompatActivity {
     }
         public void wrocDoNotatek(){
             NotatkiIntent=new Intent(this, NotatkiActivity.class);
-            finish();
             startActivity(NotatkiIntent);
+            finish();
+
         }
 }

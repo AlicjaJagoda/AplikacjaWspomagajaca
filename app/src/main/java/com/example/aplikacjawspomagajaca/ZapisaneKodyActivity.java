@@ -10,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ZapisaneKodyActivity extends AppCompatActivity {
 
@@ -20,15 +22,13 @@ public class ZapisaneKodyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_zapisane_kody);
         String path = this.getFilesDir().toString();
         File directory = new File(path);
-        String[] listaKodowString = directory.list();
-        for (int i = 0; i < listaKodowString.length; i++) {
-            listaKodowString[i] = listaKodowString[i].substring(0, listaKodowString[i].length() - 4);
+        ArrayList<String> listaKodowString =  new ArrayList<String>(Arrays.asList(directory.list()));
+        for (int i = 0; i < listaKodowString.size(); i++) {
+            listaKodowString.set(i, listaKodowString.get(i).substring(0, listaKodowString.get(i).length() - 4));
         }
-        ArrayAdapter adapter = new ArrayAdapter<String>(this,
-                R.layout.activity_listview, listaKodowString);
-
         ListView listView = (ListView) findViewById(R.id.listaKodow);
-        listView.setAdapter(adapter);
+        CustomListAdapter listAdapter = new CustomListAdapter(ZapisaneKodyActivity.this, R.layout.custom_list, listaKodowString );
+        listView.setAdapter(listAdapter);
         listView.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -40,6 +40,7 @@ public class ZapisaneKodyActivity extends AppCompatActivity {
     public void otworzKod(String plik){
       otworzKodIntent = new Intent(this, OdczytZapisanegoKoduActivity.class);
       otworzKodIntent.putExtra("path", plik);
+      finish();
       startActivity(otworzKodIntent);
     }
 

@@ -16,19 +16,9 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.613" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/tlo" />
+        app:layout_constraintVertical_bias="0.613"
+        android:background="@drawable/button"
+        />
 
     <Button
         android:id="@+id/zapisaneKodyBtn"
@@ -38,31 +28,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/skanujSalaBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/skanujSalaBtn"
+        android:background="@drawable/button"/>
 
     <Button
         android:id="@+id/notatkiBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Notatki"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/zapisaneKodyBtn"
-        app:layout_constraintVertical_bias="0.0" />
+        android:background="@drawable/button"/>
 
     <Button
         android:id="@+id/skanujSalaBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Skanuj kod sali"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnZeskanujKod"
-        app:layout_constraintVertical_bias="0.0" />
+        android:background="@drawable/button"/>
 
     <Button
         android:id="@+id/oAplikacjiBtn"
@@ -71,5 +60,16 @@
         android:text="Informacje o aplikacji"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/notatkiBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/notatkiBtn"
+        android:background="@drawable/button"/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/btnZeskanujKod"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo_z_przeze" />
 </androidx.constraintlayout.widget.ConstraintLayout>

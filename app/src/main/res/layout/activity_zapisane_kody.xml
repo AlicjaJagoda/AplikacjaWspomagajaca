@@ -14,4 +14,18 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints"></ListView>
 
+    <TextView
+        android:id="@+id/zapisaneKody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Zapisane Kody"
+        app:layout_constraintBottom_toTopOf="@+id/listaKodow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:fontFamily="casual"
+        android:textColor="#29FFC2"
+        android:textSize="35sp"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

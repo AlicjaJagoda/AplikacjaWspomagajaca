@@ -17,7 +17,8 @@
         android:text="Znaleziono QR Code"
         app:layout_constraintBottom_toBottomOf="@+id/activity_previewView1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/button"/>
 
     <Button
         android:id="@+id/skanNauBtn"
@@ -27,6 +28,7 @@
         app:layout_constraintBottom_toTopOf="@+id/activity_qrCodeFoundButton1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/button"
         />
     <Button
         android:id="@+id/przejdzNaPlanSaliBtn"
@@ -36,6 +38,7 @@
         app:layout_constraintBottom_toTopOf="@+id/activity_qrCodeFoundButton1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/button"
         />
     <Button
         android:id="@+id/zapiszKodSalaBtn"
@@ -45,6 +48,7 @@
         app:layout_constraintBottom_toTopOf="@+id/przejdzNaPlanSaliBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/button"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

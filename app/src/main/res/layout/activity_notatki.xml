@@ -15,7 +15,10 @@
         android:textSize="35sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:fontFamily="casual"
+        android:textColor="#29FFC2"
+        />
 
     <Button
         android:id="@+id/nowaNotatkaBtn"
@@ -24,7 +27,8 @@
         android:text="Dodaj nową notatkę"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/button"/>
 
     <ListView
         android:id="@+id/listaNotatek"

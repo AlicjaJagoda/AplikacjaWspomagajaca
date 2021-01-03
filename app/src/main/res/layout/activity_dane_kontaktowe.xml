@@ -12,7 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="email@pl.pl"
-        android:textSize="18sp"
+        android:textSize="24sp"
+        android:textColor="#29FFC2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,11 +24,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="52532522"
-        android:textSize="18sp"
+        android:textSize="24sp"
+        android:textColor="#29FFC2"
         app:layout_constraintBottom_toTopOf="@+id/emailText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/daneKontText" />
+        app:layout_constraintTop_toBottomOf="@+id/daneKontText"
+        />
 
     <TextView
         android:id="@+id/daneKontText"
@@ -35,6 +38,8 @@
         android:layout_height="wrap_content"
         android:text="Dane kontaktowe"
         android:textSize="35sp"
+        android:fontFamily="casual"
+        android:textColor="#29FFC2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +54,8 @@
         app:layout_constraintBottom_toTopOf="@+id/emailText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nrTelText" />
+        app:layout_constraintTop_toBottomOf="@+id/nrTelText"
+        android:background="@drawable/button"/>
 
     <Button
         android:id="@+id/wyslijEmailBtn"
@@ -60,5 +66,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailText"
-        app:layout_constraintVertical_bias="0.244" />
+        app:layout_constraintVertical_bias="0.244"
+        android:background="@drawable/button"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
