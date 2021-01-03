@@ -44,15 +44,26 @@
         app:layout_constraintBottom_toTopOf="@+id/stronaSaliZapKodBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:fontFamily="casual"
+        android:textColor="#29FFC2"/>
 
     <Button
         android:id="@+id/usunZapisanyKod"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Usuń zapisany kod"
+        android:background="@drawable/button"
+        android:text="Usuń kod"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:background="@drawable/button"/>
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/edytujKod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:text="Zmień nazwę"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

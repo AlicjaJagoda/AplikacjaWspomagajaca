@@ -21,6 +21,8 @@ public class OdczytZapisanegoKoduActivity extends AppCompatActivity {
     String NnrTel = "";
     Intent DaneKontaktoweIntent;
     Intent WrocDoKodowIntent;
+    Intent edytujNazweKoduIntent;
+    String kodDoEdycjiNazwy;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +34,7 @@ public class OdczytZapisanegoKoduActivity extends AppCompatActivity {
         daneKontaktoweBtn.setVisibility(View.INVISIBLE);
         uruchomStroneBtn.setVisibility(View.INVISIBLE);
         Button usunZapisanyKod= findViewById(R.id.usunZapisanyKod);
+        Button edytujNazwe=findViewById(R.id.edytujKod);
         TextView kodQRTV=(TextView) findViewById(R.id.kodQR);
         kodQRTV.setText(getIntent().getStringExtra("path"));
         String path = this.getFilesDir()+"/"+getIntent().getStringExtra("path")+".txt";
@@ -141,6 +144,7 @@ public class OdczytZapisanegoKoduActivity extends AppCompatActivity {
                 });
                 Nemail = email;
                 NnrTel = nrTel;
+                kodDoEdycjiNazwy=trescKoduQR;
 
             }
         }
@@ -156,6 +160,14 @@ public class OdczytZapisanegoKoduActivity extends AppCompatActivity {
                 }
             }
         });
+        edytujNazwe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edytujNazweKodu(kodDoEdycjiNazwy, getIntent().getStringExtra("path"));
+                finish();
+            }
+        });
+
     }
     public  void daneKontaktoweAkt(){
         DaneKontaktoweIntent=new Intent(this, DaneKontaktoweActivity.class);
@@ -167,5 +179,11 @@ public class OdczytZapisanegoKoduActivity extends AppCompatActivity {
     public void wrocDoKodow(){
         WrocDoKodowIntent= new Intent(this,ZapisaneKodyActivity.class);
         startActivity(WrocDoKodowIntent);
+    }
+    public void edytujNazweKodu(String kod, String nazwaKodu) {
+        edytujNazweKoduIntent = new Intent(this, EdytujNazweKoduActivity.class);
+        edytujNazweKoduIntent.putExtra("kod", kod);
+        edytujNazweKoduIntent.putExtra("nazwaKodu",nazwaKodu);
+        startActivity(edytujNazweKoduIntent);
     }
 }

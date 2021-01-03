@@ -16,28 +16,39 @@
         android:roundIcon="@mipmap/uzerhelp_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".OAplikacjiActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".OdczytZapisanegoKoduActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ZapisaneKodyActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".DialogZapisActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".EdytujNotatkeActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".NowaNotatkaActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".NotatkiActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".DaneKontaktoweActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".SkanowanieSalaActivity1"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".SkanowanieActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".MainActivity"
+        <activity android:name=".EdytujNazweKoduActivity"></activity>
+        <activity
+            android:name=".OAplikacjiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".OdczytZapisanegoKoduActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ZapisaneKodyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DialogZapisActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EdytujNotatkeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".NowaNotatkaActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".NotatkiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DaneKontaktoweActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SkanowanieSalaActivity1"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SkanowanieActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

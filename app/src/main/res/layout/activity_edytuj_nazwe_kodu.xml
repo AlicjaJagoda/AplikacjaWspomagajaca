@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DialogZapisActivity">
+    tools:context=".EdytujNazweKoduActivity">
 
     <TextView
         android:id="@+id/podajNazweKodu"
@@ -38,6 +38,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nazwaKodu"
         android:background="@drawable/button"/>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -29,6 +29,7 @@ public class DialogZapisActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //po zapisie kodu wracamy do poprzedniej aktywności
                 String nazwaKodu = nazwaKoduPole.getText().toString();
+                if(!nazwaKodu.equals("")){
                 try {
                     File kodDoZapisu = new File(getFilesDir() + "/" + nazwaKodu + ".txt");
                     if (!kodDoZapisu.exists()) {
@@ -56,7 +57,8 @@ public class DialogZapisActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     Log.e("Exception", "Błąd zapisu pliku " + e.toString());
                 }
-                finish();
+                finish();}
+                else Toast.makeText(DialogZapisActivity.this, "Nie podano nazwy!", Toast.LENGTH_SHORT).show();
             }
         });
     }

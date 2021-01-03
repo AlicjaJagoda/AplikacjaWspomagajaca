@@ -40,6 +40,7 @@ public class ZapisaneKodyActivity extends AppCompatActivity {
     public void otworzKod(String plik){
       otworzKodIntent = new Intent(this, OdczytZapisanegoKoduActivity.class);
       otworzKodIntent.putExtra("path", plik);
+      finish();
       startActivity(otworzKodIntent);
     }
 

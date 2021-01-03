@@ -38,7 +38,6 @@ public class NotatkiActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String item = (String) listView.getItemAtPosition(position);
                 otworzNotatkeAkt(item);
-                finish();
             }
         });
 
@@ -56,8 +55,8 @@ public class NotatkiActivity extends AppCompatActivity {
 
 
     public void nowaNotatkaAkt() {
-        finish();
         nowaNotatkaIntent = new Intent(this, NowaNotatkaActivity.class);
+        finish();
         startActivity(nowaNotatkaIntent);
 
     }
@@ -65,6 +64,7 @@ public class NotatkiActivity extends AppCompatActivity {
     public void otworzNotatkeAkt(String plik) {
         edytujNotatkeIntent = new Intent(this, EdytujNotatkeActivity.class);
         edytujNotatkeIntent.putExtra("nazwaPliku", plik);
+        finish();
         startActivity(edytujNotatkeIntent);
     }
 
