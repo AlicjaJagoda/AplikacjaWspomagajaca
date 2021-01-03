@@ -209,6 +209,7 @@ public class SkanowanieActivity extends AppCompatActivity {
 
     public void nowaAkt() { //aktywność od skanowania kodu sali
         aktSkanowanieSalaIntent = new Intent(this, SkanowanieSalaActivity1.class);
+        finish();
         startActivity(aktSkanowanieSalaIntent);
     }
 
