@@ -10,7 +10,7 @@
         android:id="@+id/podajNazweKodu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Podaj nazwę kodu"
+        android:text="Nowa nazwa kodu"
         android:textColor="#29FFC2"
         android:fontFamily="casual"
         android:textSize="20sp"

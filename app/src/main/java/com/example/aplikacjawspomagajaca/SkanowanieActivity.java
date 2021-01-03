@@ -55,6 +55,10 @@ public class SkanowanieActivity extends AppCompatActivity {
         qrCodeFoundButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                zapiszKodBtn.setVisibility(View.INVISIBLE);
+                uruchomStroneBtn.setVisibility(View.INVISIBLE);
+                daneKontaktoweBtn.setVisibility(View.INVISIBLE);
+                skanSalaBtn.setVisibility(View.INVISIBLE);
                 //parsowanie dla kodu QR (znacznik: SUZ_ -> sala znacznik: NUZ_ -> nauczyciel)
                 String znacznik = qrCode.substring(0, 4);
                 String email = "";
@@ -83,6 +87,7 @@ public class SkanowanieActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Nieprawidłowy kod QR", Toast.LENGTH_SHORT).show();
                             daneKontaktoweBtn.setVisibility(View.INVISIBLE);
                             uruchomStroneBtn.setVisibility(View.INVISIBLE);
+                            zapiszKodBtn.setVisibility(View.INVISIBLE);
                             email = "";
                             break;
                         }
@@ -108,6 +113,7 @@ public class SkanowanieActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Nieprawidłowy kod QR", Toast.LENGTH_SHORT).show();
                             daneKontaktoweBtn.setVisibility(View.INVISIBLE);
                             uruchomStroneBtn.setVisibility(View.INVISIBLE);
+                            zapiszKodBtn.setVisibility(View.INVISIBLE);
                             nrTel = "";
                             break;
                         }
