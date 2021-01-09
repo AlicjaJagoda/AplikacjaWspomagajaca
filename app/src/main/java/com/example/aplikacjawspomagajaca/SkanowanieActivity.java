@@ -12,17 +12,30 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Size;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import java.net.*;
+import java.io.*;
+import java.util.ArrayList;
 
 import com.google.common.util.concurrent.ListenableFuture;
 
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
+
+import static android.widget.Toast.*;
 
 public class SkanowanieActivity extends AppCompatActivity {
 
@@ -35,12 +48,24 @@ public class SkanowanieActivity extends AppCompatActivity {
     private String qrCode;
     String Nemail = "";
     String NnrTel = "";
+    ArrayList<String> doTosta=new ArrayList<String>();
+    ArrayList<String> godzinyZajec=new ArrayList<String>();
+    StringBuilder sb;
+    String[] words=null;
+    String s;
+    private Calendar fromTime;
+    private Calendar toTime;
+    private Calendar currentTime;
+    int liczbaZajec=0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_skanowanie);
         previewView = findViewById(R.id.activity_previewView);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         cameraProviderFuture = ProcessCameraProvider.getInstance(this);
         qrCodeFoundButton = findViewById(R.id.activity_qrCodeFoundButton);
         qrCodeFoundButton.setVisibility(View.INVISIBLE);
@@ -84,7 +109,7 @@ public class SkanowanieActivity extends AppCompatActivity {
                         daneKontaktoweBtn.setVisibility(View.VISIBLE);
                         uruchomStroneBtn.setVisibility(View.VISIBLE);
                         if (j + 4 >= qrCode.length() - 4) {
-                            Toast.makeText(getApplicationContext(), "Nieprawidłowy kod QR", Toast.LENGTH_SHORT).show();
+                            makeText(getApplicationContext(), "Nieprawidłowy kod QR", LENGTH_SHORT).show();
                             daneKontaktoweBtn.setVisibility(View.INVISIBLE);
                             uruchomStroneBtn.setVisibility(View.INVISIBLE);
                             zapiszKodBtn.setVisibility(View.INVISIBLE);
@@ -110,7 +135,7 @@ public class SkanowanieActivity extends AppCompatActivity {
                         temp5 = qrCode.substring(i + 4, j + 4);
                         nrTel += temp1;
                         if (j + 4 >= qrCode.length() - 4) {
-                            Toast.makeText(getApplicationContext(), "Nieprawidłowy kod QR", Toast.LENGTH_SHORT).show();
+                            makeText(getApplicationContext(), "Nieprawidłowy kod QR", LENGTH_SHORT).show();
                             daneKontaktoweBtn.setVisibility(View.INVISIBLE);
                             uruchomStroneBtn.setVisibility(View.INVISIBLE);
                             zapiszKodBtn.setVisibility(View.INVISIBLE);
@@ -137,7 +162,107 @@ public class SkanowanieActivity extends AppCompatActivity {
                     uruchomStroneBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(getApplicationContext(), URL, Toast.LENGTH_SHORT).show();
+                            try {
+                                URL url=new URL(URL);
+
+                                try (InputStreamReader isr = new InputStreamReader(url.openStream(), StandardCharsets.UTF_8);
+                                     BufferedReader br = new BufferedReader(isr)) {
+
+                                    String line;
+
+                                    sb = new StringBuilder();
+
+                                    while ((line = br.readLine()) != null) {
+
+                                        sb.append(line);
+                                        sb.append(System.lineSeparator());
+                                    }
+                                    File plikHTML=new File(getFilesDir(),"tmp.html");
+                                    BufferedWriter writer = new BufferedWriter(new FileWriter(plikHTML, true /*append*/));
+                                    new FileOutputStream(plikHTML).close();
+                                    FileReader fileRead = new FileReader(plikHTML);
+                                    writer.write(sb.toString());
+
+                                    BufferedReader buffRead = new BufferedReader(fileRead);
+                                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                                    LocalDateTime now = LocalDateTime.now();
+                                    String input=dtf.format(now).toString()+"</td>";
+                                    File tmp1 = new File(getFilesDir(),"tmp1.html");
+                                    BufferedWriter writer1 = new BufferedWriter(new FileWriter(tmp1, true /*append*/));
+                                    new FileOutputStream(tmp1).close();
+                                    while((s=buffRead.readLine())!=null)
+                                    {
+                                        words=s.split("<td>");
+                                        for (String word : words)
+                                        {
+                                            if (word.equals(input))
+                                            {
+                                                writer1.write(s);
+                                                writer1.write(System.lineSeparator());
+                                                for (int i=0; i<3;i++) { //plan nauczyciela i<3; plan studentów i<4
+                                                    s=buffRead.readLine();
+                                                    writer1.write(s);
+                                                    writer1.write(System.lineSeparator());
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    writer1.close();
+                                    FileReader fileR = new FileReader(tmp1);
+                                    BufferedReader BuffR = new BufferedReader(fileR);
+                                    String liniaPlanu;
+                                    int nrLinii=0;
+                                    int i=0;
+                                    String[] nazwaP=null;
+                                    String godzinyZajecTemp="";
+                                    String doToastaTemp="";
+                                    while((liniaPlanu=BuffR.readLine())!=null)
+                                    {
+
+                                        if(nrLinii==1+(4*i))
+                                        {
+                                            doToastaTemp+=liniaPlanu.substring(liniaPlanu.length()-10,liniaPlanu.length()-5).toString();
+                                            doToastaTemp+="-";
+                                            godzinyZajecTemp+=liniaPlanu.substring(liniaPlanu.length()-10,liniaPlanu.length()-5).toString();
+                                            godzinyZajecTemp+="-";
+                                        }
+                                        else if(nrLinii==2+(4*i)){
+                                            doToastaTemp+=liniaPlanu.substring(liniaPlanu.length()-10,liniaPlanu.length()-5).toString();
+                                            doToastaTemp+=" ";
+                                            godzinyZajecTemp+=liniaPlanu.substring(liniaPlanu.length()-10,liniaPlanu.length()-5).toString();
+                                        }
+                                        else if(nrLinii==3+(4*i))
+                                        {
+                                            nazwaP=liniaPlanu.split("<td>");
+                                            doToastaTemp+=nazwaP[1];
+                                        }
+                                        nrLinii++;
+                                        if(nrLinii==4+(4*i)){
+                                            doTosta.add(doToastaTemp);
+                                            godzinyZajec.add(godzinyZajecTemp);
+                                            doToastaTemp="";
+                                            godzinyZajecTemp="";
+                                            i++;
+                                        }
+                                    }
+
+
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            } catch (MalformedURLException e) {
+                                e.printStackTrace();
+                            }
+                            for(int j=0;j<doTosta.size();j++){
+                                if(sprawdzCzas(godzinyZajec.get(j))){
+                                    makeText(SkanowanieActivity.this,doTosta.get(j), LENGTH_LONG).show();
+                                    makeText(SkanowanieActivity.this,doTosta.get(j), LENGTH_LONG).show();
+                                    makeText(SkanowanieActivity.this,doTosta.get(j), LENGTH_LONG).show();
+                                break;}
+                                else if(!(j+1<doTosta.size()))makeText(SkanowanieActivity.this,"Aktualnie nie są prowadzone zajęcia.", LENGTH_LONG).show();
+                                else if(doTosta.size()==1&&!(sprawdzCzas(godzinyZajec.get(j))))makeText(SkanowanieActivity.this,"Aktualnie nie są prowadzone zajęcia.", LENGTH_LONG).show();
+                                }
                             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(URL)));
                         }
                     });
@@ -152,9 +277,9 @@ public class SkanowanieActivity extends AppCompatActivity {
                     NnrTel = nrTel;
 
 
-                    // startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(URL))); - uruchomienie przeglądaqrki
+
                 } else if (znacznik.equals("SUZ_")) {
-                    Toast.makeText(getApplicationContext(), "Wykryto kod sali, można przejść do skanowania kodu sali klikając guzik poniżej", Toast.LENGTH_LONG).show();
+                    makeText(getApplicationContext(), "Wykryto kod sali, można przejść do skanowania kodu sali klikając guzik poniżej", LENGTH_LONG).show();
                     skanSalaBtn.setVisibility(View.VISIBLE);
                     skanSalaBtn.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
@@ -162,7 +287,7 @@ public class SkanowanieActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    Toast.makeText(getApplicationContext(), "Nieodpowiedni kod QR", Toast.LENGTH_SHORT).show();
+                    makeText(getApplicationContext(), "Nieodpowiedni kod QR", LENGTH_SHORT).show();
                 }
             }
         });
@@ -175,7 +300,7 @@ public class SkanowanieActivity extends AppCompatActivity {
                 ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
                 bindCameraPreview(cameraProvider);
             } catch (ExecutionException | InterruptedException e) {
-                Toast.makeText(this, "Problem z uruchomieniem kamery " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                makeText(this, "Problem z uruchomieniem kamery " + e.getMessage(), LENGTH_SHORT).show();
             }
         }, ContextCompat.getMainExecutor(this));
     }
@@ -231,5 +356,28 @@ public class SkanowanieActivity extends AppCompatActivity {
         zapiszKodNauczIntent = new Intent(this, DialogZapisActivity.class);
         zapiszKodNauczIntent.putExtra("kod", kod);
         startActivity(zapiszKodNauczIntent);
+    }
+    public boolean sprawdzCzas(String time) {
+        try {
+            String[] times = time.split("-");
+            String[] from = times[0].split(":");
+            String[] until = times[1].split(":");
+
+            fromTime = Calendar.getInstance();
+            fromTime.set(Calendar.HOUR_OF_DAY, Integer.valueOf(from[0]));
+            fromTime.set(Calendar.MINUTE, Integer.valueOf(from[1]));
+
+            toTime = Calendar.getInstance();
+            toTime.set(Calendar.HOUR_OF_DAY, Integer.valueOf(until[0]));
+            toTime.set(Calendar.MINUTE, Integer.valueOf(until[1]));
+
+            currentTime = Calendar.getInstance();
+            if(currentTime.after(fromTime) && currentTime.before(toTime)){
+                return true;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return false;
     }
 }
