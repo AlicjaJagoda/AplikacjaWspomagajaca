@@ -57,6 +57,7 @@ public class OdczytZapisanegoKoduActivity extends AppCompatActivity {
             } catch (Exception e) {
                 Log.e("ReadWriteFile", "Nie można odczytać pliku " + path);
             }
+            kodDoEdycjiNazwy=trescKoduQR;
             String znacznik = trescKoduQR.substring(0, 4);
             if (znacznik.equals("SUZ_")) {
                 String URL = trescKoduQR.substring(4);
@@ -144,7 +145,7 @@ public class OdczytZapisanegoKoduActivity extends AppCompatActivity {
                 });
                 Nemail = email;
                 NnrTel = nrTel;
-                kodDoEdycjiNazwy=trescKoduQR;
+
 
             }
         }
