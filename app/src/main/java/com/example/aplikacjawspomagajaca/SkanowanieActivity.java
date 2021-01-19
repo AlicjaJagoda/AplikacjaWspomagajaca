@@ -56,7 +56,6 @@ public class SkanowanieActivity extends AppCompatActivity {
     private Calendar fromTime;
     private Calendar toTime;
     private Calendar currentTime;
-    int liczbaZajec=0;
 
 
     @Override
