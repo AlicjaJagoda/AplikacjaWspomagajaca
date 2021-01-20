@@ -50,6 +50,9 @@ public class SkanowanieSalaActivity1 extends AppCompatActivity {
         qrCodeFoundButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                zapiszKodSali.setVisibility(View.INVISIBLE);
+                przejdzNaStroneSali.setVisibility(View.INVISIBLE);
+                skanNauBtn.setVisibility(View.INVISIBLE);
                 //parsowanie dla kodu QR (znacznik: SUZ_ -> sala znacznik: NUZ_ -> nauczyciel)
                 String znacznik = qrCode.substring(0, 4);
                 if (znacznik.equals("SUZ_")) {

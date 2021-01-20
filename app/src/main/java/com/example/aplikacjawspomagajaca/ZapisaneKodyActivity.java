@@ -24,7 +24,9 @@ public class ZapisaneKodyActivity extends AppCompatActivity {
         File directory = new File(path);
         ArrayList<String> listaKodowString =  new ArrayList<String>(Arrays.asList(directory.list()));
         for (int i = 0; i < listaKodowString.size(); i++) {
-            listaKodowString.set(i, listaKodowString.get(i).substring(0, listaKodowString.get(i).length() - 4));
+            if(!(listaKodowString.get(i).substring(listaKodowString.get(i).length() - 4).equals("html"))){
+            listaKodowString.set(i, listaKodowString.get(i).substring(0, listaKodowString.get(i).length() - 4));}
+            else {listaKodowString.remove(i); i--; }
         }
         ListView listView = (ListView) findViewById(R.id.listaKodow);
         CustomListAdapter listAdapter = new CustomListAdapter(ZapisaneKodyActivity.this, R.layout.custom_list, listaKodowString );

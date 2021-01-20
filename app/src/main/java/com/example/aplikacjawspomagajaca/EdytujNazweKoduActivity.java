@@ -36,7 +36,7 @@ public class EdytujNazweKoduActivity extends AppCompatActivity {
                 if(!nazwaKodu.equals(nazwa)){
                     try {
                         File poprzedniKod=new File(getFilesDir() + "/" + nazwa + ".txt");
-                        poprzedniKod.delete();
+                        //poprzedniKod.delete();
                         File kodDoZapisu = new File(getFilesDir() + "/" + nazwaKodu + ".txt");
                         if (!kodDoZapisu.exists()) {
                             kodDoZapisu.createNewFile();
@@ -47,6 +47,7 @@ public class EdytujNazweKoduActivity extends AppCompatActivity {
                                     new String[]{kodDoZapisu.toString()},
                                     null,
                                     null);
+                            poprzedniKod.delete();
                             Toast.makeText(EdytujNazweKoduActivity.this, "Kod " + nazwaKodu + " został zapisany.", Toast.LENGTH_SHORT).show();
                         } else {
                             kodDoZapisu.delete();
@@ -57,6 +58,7 @@ public class EdytujNazweKoduActivity extends AppCompatActivity {
                                     new String[]{kodDoZapisu.toString()},
                                     null,
                                     null);
+                            poprzedniKod.delete();
                             Toast.makeText(EdytujNazweKoduActivity.this, "Kod " + nazwaKodu + " został nadpisany", Toast.LENGTH_SHORT).show();
                         }
 
